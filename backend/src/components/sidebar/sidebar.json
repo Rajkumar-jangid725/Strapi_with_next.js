@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sidebar_sidebars",
+  "info": {
+    "displayName": "Sidebar"
+  },
+  "options": {},
+  "attributes": {
+    "Links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "links.link"
+    }
+  }
+}
