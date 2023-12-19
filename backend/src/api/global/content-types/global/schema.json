@@ -79,6 +79,14 @@
         }
       },
       "component": "sidebar.sidebar"
+    },
+    "title": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
     }
   }
 }

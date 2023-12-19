@@ -1,12 +1,9 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 import { fetchAPI } from "../utils/fetch-api";
-
 import Loader from "../components/Loader";
 import Blog from "../views/blog-list";
-import PageHeader from "../components/PageHeader";
 import "tailwindcss/tailwind.css";
-import { CiSearch } from "react-icons/ci";
 
 interface Meta {
   pagination: {
@@ -71,7 +68,6 @@ export default function Profile() {
   return (
     <>
       <div>
-        <PageHeader heading="THE BEANGENIUS BLOG"/>
         <Blog data={data}>
           {meta!.pagination.start + meta!.pagination.limit <
             meta!.pagination.total && (

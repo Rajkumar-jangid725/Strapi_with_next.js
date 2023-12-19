@@ -7,13 +7,15 @@ import { i18n } from "../../../i18n-config";
 import Banner from "./components/Banner";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import {FALLBACK_SEO} from "@/app/[lang]/utils/constants";
-
+import Sidebar from "./components/Sidebar";
+import { FALLBACK_SEO } from "@/app/[lang]/utils/constants";
+import { json } from "stream/consumers";
 
 async function getGlobal(lang: string): Promise<any> {
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
 
-  if (!token) throw new Error("The Strapi API Token environment variable is not set.");
+  if (!token)
+    throw new Error("The Strapi API Token environment variable is not set.");
 
   const path = `/global`;
   const options = { headers: { Authorization: `Bearer ${token}` } };
@@ -22,6 +24,7 @@ async function getGlobal(lang: string): Promise<any> {
     populate: [
       "metadata.shareImage",
       "favicon",
+      "title",
       "notificationBanner.link",
       "navbar.links",
       "navbar.navbarLogo.logoImg",
@@ -30,13 +33,18 @@ async function getGlobal(lang: string): Promise<any> {
       "footer.legalLinks",
       "footer.socialLinks",
       "footer.categories",
+      "sidebar.links",
     ],
     locale: lang,
   };
   return await fetchAPI(path, urlParamsObject, options);
 }
 
-export async function generateMetadata({ params } : { params: {lang: string}}): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
+}): Promise<Metadata> {
   const meta = await getGlobal(params.lang);
 
   if (!meta.data) return FALLBACK_SEO;
@@ -61,15 +69,10 @@ export default async function RootLayout({
   params: { lang: string };
 }) {
   const global = await getGlobal(params.lang);
-  // TODO: CREATE A CUSTOM ERROR PAGE
   if (!global.data) return null;
-  
-  const { notificationBanner, navbar, footer } = global.data.attributes;
 
-  // const navbarLogoUrl = getStrapiMedia(
-  //   navbar.navbarLogo.logoImg.data.attributes.url
-  // );
-
+  const { notificationBanner, title, navbar, footer, sidebar } =
+    global.data.attributes;
   const footerLogoUrl = getStrapiMedia(
     footer.footerLogo.logoImg.data.attributes.url
   );
@@ -77,15 +80,23 @@ export default async function RootLayout({
   return (
     <html lang={params.lang}>
       <body>
-        <Navbar
-          links={navbar.links}
-          // logoUrl={navbarLogoUrl}
-          // logoText={navbar.navbarLogo.logoText}
-        />
+        <Navbar links={navbar.links} />
+        <div className="my-8 w-full text-center">
+          <h2 className="text-4xl font-bold font-heading hover:text-yellow-500">
+            {title}
+          </h2>
+        </div>
 
-        <main className="dark:bg-black dark:text-gray-100 min-h-screen">
-          {children}
-        </main>
+        <div className="container mx-auto grid grid-cols-4 gap-4 space-y-6 sm:space-y-12">
+          <div className="col-span-3">
+            <main className="dark:bg-black dark:text-gray-100 min-h-screen">
+              {children}
+            </main>
+          </div>
+          <div className="col-span-1">
+            <Sidebar links={sidebar.links} />
+          </div>
+        </div>
 
         <Banner data={notificationBanner} />
 
