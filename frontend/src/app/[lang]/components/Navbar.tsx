@@ -25,7 +25,7 @@ function NavLink({ url, text }: NavLink) {
     <li className="flex">
       <Link
         href={url}
-        className={`flex font-bold items-center mx-4 -mb-1 dark:border-transparent hover:text-yellow-500 ${
+        className={`flex font-bold items-center mx-4 -mb-1 dark:border-transparent hover:text-red-300 ${
           path === url && "dark:text-violet-400 dark:border-violet-400"
         }}`}
       >

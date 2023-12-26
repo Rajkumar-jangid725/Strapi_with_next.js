@@ -24,7 +24,7 @@ function SidebarLink({ url, text }: SidebarLink) {
     <li className="flex border border-gray-100 justify-center py-1">
       <Link
         href={url}
-        className={`flex items-center mx-4 dark:border-transparent hover:text-yellow-500 ${
+        className={`flex items-center mx-4 dark:border-transparent hover:text-red-300 ${
           path === url && "dark:text-violet-400 dark:border-violet-400"
         }}`}
       >
@@ -69,7 +69,7 @@ export default function Sidebar({
         <div className="items-center flex-shrink-0">
           <ul className="overflow-y">
           <li className="flex border border-gray-100 justify-center py-1">
-            <span className={`flex font-bold items-center mx-4 dark:border-transparent hover:text-yellow-500`}> Categroies</span>
+            <span className={`flex font-bold items-center mx-4 dark:border-transparent hover:text-red-300`}> Categroies</span>
           </li>
             {links.map((item: SidebarLink) => (
               <SidebarLink key={item.id} {...item} />

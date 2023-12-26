@@ -92,16 +92,16 @@ export default function PostList({
                   />
                 )}
 
-                <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline hover:text-yellow-500">
+                <h3 className="text-2xl font-semibold group-hover:underline group-focus:underline hover:text-red-300">
                   {article.attributes.title}
                 </h3>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-xs dark:text-gray-400 hover:text-yellow-500">
+                  <span className="text-xs dark:text-gray-400 hover:text-red-300">
                     {formatDate(article.attributes.publishedAt)}
                   </span>
                   {authorsBio && (
-                    <span className="text-xs dark:text-gray-400 hover:text-yellow-500">
+                    <span className="text-xs dark:text-gray-400 hover:text-red-300">
                       {authorsBio.name}
                     </span>
                   )}

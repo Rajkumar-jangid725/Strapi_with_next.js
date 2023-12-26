@@ -82,7 +82,7 @@ export default async function RootLayout({
       <body>
         <Navbar links={navbar.links} />
         <div className="my-8 w-full text-center">
-          <h2 className="text-4xl font-bold font-heading hover:text-yellow-500">
+          <h2 className="text-4xl font-bold font-heading hover:text-red-300">
             {title}
           </h2>
         </div>

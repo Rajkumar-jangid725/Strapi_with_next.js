@@ -4,9 +4,10 @@ import axios from "axios";
 
 interface CommentReplyProps {
   data: number;
+  commentId: number;
 }
 
-function Reply({ data }: CommentReplyProps) {
+function Reply({ data, commentId }: CommentReplyProps) {
   const [comment, setComment] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,7 +24,7 @@ function Reply({ data }: CommentReplyProps) {
       },
       "content": comment,
       "website": website,
-      "threadOf": 1,
+      "threadOf": commentId,
     }
 
     axios
@@ -76,7 +77,7 @@ function Reply({ data }: CommentReplyProps) {
         </label>
       </div>
       <button
-        className="mt-3 mb-3 px-3 py-1 bg-red-400 hover:bg-red-300 text-white font-semibold rounded-lg"
+        className="mt-3 px-3 py-1 bg-red-400 hover:bg-red-300 text-white"
         onClick={() => handleReplyComment()}
       >
         Comment

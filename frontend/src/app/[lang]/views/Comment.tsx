@@ -75,7 +75,7 @@ function Comment({ data }: CommentProps) {
         </label>
       </div>
       <button
-        className="mt-3 px-3 py-1 bg-red-400 hover:bg-red-300 text-white font-semibold rounded-lg"
+        className="mt-3 px-3 py-1 bg-red-400 hover:bg-red-300 text-white"
         onClick={() => handleComment()}
       >
         Comment

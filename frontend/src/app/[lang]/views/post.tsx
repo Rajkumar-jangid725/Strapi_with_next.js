@@ -119,8 +119,10 @@ export default function Post({ data }: { data: Article }) {
       {commentsData && commentsData.length > 0 && (
         <div className="w-full">
           {commentsData.map((item: any) => {
+            const replyData = item.children.flat();
             return (
-              <div key={item.id} className="border-b border-gray-300 mb-4">
+              <div key={item.id} className="py-2 border-b border-gray-300 mb-4">
+                <div className="w-3/4 px-4 py-2 border rounded-lg border-gray-300 mb-4 shadow-md">
                 <div>{item.content} </div>
                 <div>
                   {item.author.id}{" "}
@@ -129,12 +131,31 @@ export default function Post({ data }: { data: Article }) {
                   </span>
                 </div>
                 <button
-                  className="mt-1 mb-2 px-3 py-1 bg-red-400 hover:bg-red-300 text-white font-semibold rounded-lg"
+                  className="mt-3 px-5 py-1 bg-red-400 hover:bg-red-300 text-white text-[12px] uppercase"
                   onClick={() => handleReplyClick(item.id)}
                 >
-                  Reply
+                  Post Reply
                 </button>
-                {clickedButtonId === item.id && <Reply data={item.id} />}
+                </div>
+                {clickedButtonId === item.id && <Reply data={id} commentId={item.id} />}
+                {replyData && replyData.length > 0 && (
+                  <div className="w-3/4 ml-[25%]">
+                    <h4 className="font-semibold mb-2">Replies:</h4>
+                    {replyData.map((value: any) => {
+                      return (
+                        <div className="px-4 py-2 border rounded-lg border-gray-300 mb-4 shadow-md ">
+                          <div>{value.content}</div>
+                          <div>
+                            {value.author.id}{" "}
+                            <span className="float-right">
+                              {formatDate(value.createdAt)}
+                            </span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
