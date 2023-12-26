@@ -2,18 +2,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-interface CommentProps {
+interface CommentReplyProps {
   data: number;
 }
 
-function Comment({ data }: CommentProps) {
+function Reply({ data }: CommentReplyProps) {
   const [comment, setComment] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
   
-  const handleComment = () => {
+  const handleReplyComment = () => {
     const requestData = {
       "author": {
         "id": data,
@@ -22,7 +22,8 @@ function Comment({ data }: CommentProps) {
         
       },
       "content": comment,
-      "website": website
+      "website": website,
+      "threadOf": 1,
     }
 
     axios
@@ -75,8 +76,8 @@ function Comment({ data }: CommentProps) {
         </label>
       </div>
       <button
-        className="mt-3 px-3 py-1 bg-red-400 hover:bg-red-300 text-white font-semibold rounded-lg"
-        onClick={() => handleComment()}
+        className="mt-3 mb-3 px-3 py-1 bg-red-400 hover:bg-red-300 text-white font-semibold rounded-lg"
+        onClick={() => handleReplyComment()}
       >
         Comment
       </button>
@@ -84,4 +85,4 @@ function Comment({ data }: CommentProps) {
   );
 }
 
-export default Comment;
+export default Reply;
