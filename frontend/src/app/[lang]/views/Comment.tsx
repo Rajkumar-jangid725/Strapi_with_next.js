@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
 
 interface CommentProps {
   data: number;
@@ -13,27 +14,66 @@ function Comment({ data }: CommentProps) {
   const [website, setWebsite] = useState("");
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
   
-  const handleComment = () => {
-    const requestData = {
-      "author": {
-        "id": data,
-        "name": name,
-        "email": email
+  // const handleComment = () => {
+  //   const requestData = {
+  //     "author": {
+  //       "id": uuidv4(),
+  //       "name": name,
+  //       "email": email
         
-      },
-      "content": comment,
-      "website": website
-    }
+  //     },
+  //     "content": comment,
+  //     "website": website
+  //   }
 
+  //   axios
+  //     .post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/comments/api::article.article:${data}`, requestData, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       console.log(token);
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+  const handleComment = () => {
     axios
-      .post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/comments/api::article.article:${data}`, requestData, {
+      .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/comments?author.email=${email}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(token);
-        console.log(response.data);
+        if (response.data.length === 0) {
+          const requestData = {
+            author: {
+              id: uuidv4(),
+              name: name,
+              email: email,
+            },
+            content: comment,
+            website: website,
+          };
+  
+          axios
+            .post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/comments/api::article.article:${data}`, requestData, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        } else {
+          console.error("Email already exists in the database");
+        }
       })
       .catch((error) => {
         console.error(error);

@@ -123,21 +123,27 @@ export default function Post({ data }: { data: Article }) {
             return (
               <div key={item.id} className="py-2 border-b border-gray-300 mb-4">
                 <div className="w-3/4 px-4 py-2 border rounded-lg border-gray-300 mb-4 shadow-md">
-                <div>{item.content} </div>
-                <div>
-                  {item.author.id}{" "}
-                  <span className="float-right">
-                    {formatDate(item.createdAt)}
-                  </span>
+                  <div>{item.content} </div>
+                  <div>
+                    <span title={item.author.id} className="hover:underline">
+                      {item.author.id.length > 15
+                        ? `${item.author.id.slice(0, 15)}...`
+                        : item.author.id}
+                    </span>
+                    <span className="float-right">
+                      {formatDate(item.createdAt)}
+                    </span>
+                  </div>
+                  <button
+                    className="mt-3 px-5 py-1 bg-red-400 hover:bg-red-300 text-white text-[12px] uppercase"
+                    onClick={() => handleReplyClick(item.id)}
+                  >
+                    Post Reply
+                  </button>
                 </div>
-                <button
-                  className="mt-3 px-5 py-1 bg-red-400 hover:bg-red-300 text-white text-[12px] uppercase"
-                  onClick={() => handleReplyClick(item.id)}
-                >
-                  Post Reply
-                </button>
-                </div>
-                {clickedButtonId === item.id && <Reply data={id} commentId={item.id} />}
+                {clickedButtonId === item.id && (
+                  <Reply data={id} commentId={item.id} />
+                )}
                 {replyData && replyData.length > 0 && (
                   <div className="w-3/4 ml-[25%]">
                     <h4 className="font-semibold mb-2">Replies:</h4>
@@ -146,13 +152,20 @@ export default function Post({ data }: { data: Article }) {
                         <div className="px-4 py-2 border rounded-lg border-gray-300 mb-4 shadow-md ">
                           <div>{value.content}</div>
                           <div>
-                            {value.author.id}{" "}
+                            <span
+                              title={value.author.id}
+                              className="hover:underline"
+                            >
+                              {value.author.id.length > 15
+                                ? `${value.author.id.slice(0, 15)}...`
+                                : value.author.id}
+                            </span>
                             <span className="float-right">
                               {formatDate(value.createdAt)}
                             </span>
                           </div>
                         </div>
-                      )
+                      );
                     })}
                   </div>
                 )}

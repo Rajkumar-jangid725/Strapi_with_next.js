@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from 'uuid';
 
 interface CommentReplyProps {
   data: number;
@@ -17,7 +18,7 @@ function Reply({ data, commentId }: CommentReplyProps) {
   const handleReplyComment = () => {
     const requestData = {
       "author": {
-        "id": data,
+        "id": uuidv4(),
         "name": name,
         "email": email
         
