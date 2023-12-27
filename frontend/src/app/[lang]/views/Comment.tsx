@@ -12,68 +12,30 @@ function Comment({ data }: CommentProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
   
-  // const handleComment = () => {
-  //   const requestData = {
-  //     "author": {
-  //       "id": uuidv4(),
-  //       "name": name,
-  //       "email": email
-        
-  //     },
-  //     "content": comment,
-  //     "website": website
-  //   }
-
-  //   axios
-  //     .post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/comments/api::article.article:${data}`, requestData, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       console.log(token);
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // };
   const handleComment = () => {
+    const requestData = {
+      "author": {
+        "id": isAdmin ? "admin" : uuidv4(),
+        "name": name,
+        "email": email
+        
+      },
+      "content": comment,
+      "website": website
+    }
+
     axios
-      .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/comments?author.email=${email}`, {
+      .post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/comments/api::article.article:${data}`, requestData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        if (response.data.length === 0) {
-          const requestData = {
-            author: {
-              id: uuidv4(),
-              name: name,
-              email: email,
-            },
-            content: comment,
-            website: website,
-          };
-  
-          axios
-            .post(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/comments/api::article.article:${data}`, requestData, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            })
-            .then((response) => {
-              console.log(response.data);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        } else {
-          console.error("Email already exists in the database");
-        }
+        console.log(token);
+        console.log(response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -120,6 +82,12 @@ function Comment({ data }: CommentProps) {
       >
         Comment
       </button>
+      <input
+            type="checkbox" 
+            checked={isAdmin}
+            onChange={(e) => setIsAdmin(e.target.checked)} 
+            className="ml-2 px-4"
+          />
     </div>
   );
 }

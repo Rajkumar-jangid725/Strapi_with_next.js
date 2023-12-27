@@ -125,11 +125,7 @@ export default function Post({ data }: { data: Article }) {
                 <div className="w-3/4 px-4 py-2 border rounded-lg border-gray-300 mb-4 shadow-md">
                   <div>{item.content} </div>
                   <div>
-                    <span title={item.author.id} className="hover:underline">
-                      {item.author.id.length > 15
-                        ? `${item.author.id.slice(0, 15)}...`
-                        : item.author.id}
-                    </span>
+                    <span><strong>By:</strong> {item.author.name}</span>
                     <span className="float-right">
                       {formatDate(item.createdAt)}
                     </span>
@@ -152,14 +148,7 @@ export default function Post({ data }: { data: Article }) {
                         <div className="px-4 py-2 border rounded-lg border-gray-300 mb-4 shadow-md ">
                           <div>{value.content}</div>
                           <div>
-                            <span
-                              title={value.author.id}
-                              className="hover:underline"
-                            >
-                              {value.author.id.length > 15
-                                ? `${value.author.id.slice(0, 15)}...`
-                                : value.author.id}
-                            </span>
+                            <span><strong>By:</strong> {value.author.name}</span>
                             <span className="float-right">
                               {formatDate(value.createdAt)}
                             </span>
