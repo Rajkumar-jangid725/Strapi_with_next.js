@@ -12,13 +12,12 @@ function Comment({ data }: CommentProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
   const token = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
   
   const handleComment = () => {
     const requestData = {
       "author": {
-        "id": isAdmin ? "admin" : uuidv4(),
+        "id": (email == process.env.NEXT_PUBLIC_ADMIN_EMAIL) ? process.env.NEXT_PUBLIC_ADMIN_ID : uuidv4(),
         "name": name,
         "email": email
         
@@ -82,12 +81,6 @@ function Comment({ data }: CommentProps) {
       >
         Comment
       </button>
-      <input
-            type="checkbox" 
-            checked={isAdmin}
-            onChange={(e) => setIsAdmin(e.target.checked)} 
-            className="ml-2 px-4"
-          />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Image from "next/image";
 import Comment from "./Comment";
 import Reply from "./Reply";
 import axios from "axios";
+import { Avatar } from "antd";
 
 interface Article {
   id: number;
@@ -125,7 +126,15 @@ export default function Post({ data }: { data: Article }) {
                 <div className="w-3/4 px-4 py-2 border rounded-lg border-gray-300 mb-4 shadow-md">
                   <div>{item.content} </div>
                   <div>
-                    <span><strong>By:</strong> {item.author.name}</span>
+                    <span>
+                      <strong>
+                        By:
+                        <Avatar size={20} className="ml-2 -mt-1 bg-blue-300">
+                          {item.author.name.charAt(0).toUpperCase()}
+                        </Avatar>
+                      </strong>{" "}
+                      {item.author.name}
+                    </span>
                     <span className="float-right">
                       {formatDate(item.createdAt)}
                     </span>
@@ -148,7 +157,18 @@ export default function Post({ data }: { data: Article }) {
                         <div className="px-4 py-2 border rounded-lg border-gray-300 mb-4 shadow-md ">
                           <div>{value.content}</div>
                           <div>
-                            <span><strong>By:</strong> {value.author.name}</span>
+                            <span>
+                              <strong>
+                                By:
+                                <Avatar
+                                  size={20}
+                                  className="ml-2 -mt-1 bg-blue-300"
+                                >
+                                  {value.author.name.charAt(0).toUpperCase()}
+                                </Avatar>
+                              </strong>{" "}
+                              {value.author.name}
+                            </span>
                             <span className="float-right">
                               {formatDate(value.createdAt)}
                             </span>

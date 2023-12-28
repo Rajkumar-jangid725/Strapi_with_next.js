@@ -18,7 +18,7 @@ function Reply({ data, commentId }: CommentReplyProps) {
   const handleReplyComment = () => {
     const requestData = {
       "author": {
-        "id": uuidv4(),
+        "id": (email == process.env.NEXT_PUBLIC_ADMIN_EMAIL) ? process.env.NEXT_PUBLIC_ADMIN_ID : uuidv4(),
         "name": name,
         "email": email
         
