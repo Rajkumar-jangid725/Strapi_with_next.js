@@ -61,12 +61,8 @@
       "repeatable": false,
       "component": "shared.seo"
     },
-    "Keywords": {
+    "keywords": {
       "type": "string"
-    },
-    "PreventIndexing": {
-      "type": "boolean",
-      "default": false
     }
   }
 }

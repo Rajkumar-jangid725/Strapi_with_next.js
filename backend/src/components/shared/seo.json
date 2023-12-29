@@ -23,6 +23,13 @@
       "allowedTypes": [
         "images"
       ]
+    },
+    "keywords": {
+      "type": "string"
+    },
+    "preventIndexing": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

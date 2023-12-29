@@ -34,6 +34,7 @@ async function getGlobal(lang: string): Promise<any> {
       "footer.socialLinks",
       "footer.categories",
       "sidebar.links",
+      "keywords",
     ],
     locale: lang,
   };
@@ -71,6 +72,9 @@ export default async function RootLayout({
   const global = await getGlobal(params.lang);
   if (!global.data) return null;
 
+  const { metadata, favicon } = global.data.attributes;
+  const { url, description, shareImage, preventIndexing, keywords } = metadata;
+
   const { notificationBanner, title, navbar, footer, sidebar } =
     global.data.attributes;
   const footerLogoUrl = getStrapiMedia(
@@ -79,6 +83,32 @@ export default async function RootLayout({
 
   return (
     <html lang={params.lang}>
+      <head>
+        <title>{title}</title>
+        <meta name="description" content={description} key="description" />
+        <meta name="keywords" content={keywords} />
+        <meta
+          name="twitter:card"
+          content="summary_large_image"
+          key="twitter:card"
+        />
+        <meta property="og:url" content={url} key="og:url" />
+        <meta property="og:title" content={title} key="og:title" />
+        <meta
+          property="og:description"
+          content={description}
+          key="og:description"
+        />
+        <meta property="og:image" content={shareImage} key="og:image" />
+        <link rel="canonical" href={url} />
+
+        {preventIndexing && (
+          <>
+            <meta name="robots" content="noindex"></meta>
+            <meta name="googlebot" content="noindex"></meta>
+          </>
+        )}
+      </head>
       <body>
         <Navbar links={navbar.links} />
         <div className="my-8 w-full text-center">
